@@ -1,0 +1,105 @@
+.app-container {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+section {
+    min-height: 80vh;
+    /* Default min-height, Hero might differ */
+    padding: 100px 8%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    section {
+        padding: 60px 5%;
+        min-height: auto;
+        /* Allow content to dictate height on mobile to prevent gaps */
+    }
+}
+
+/* Glassmorphism Utility */
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    /* faint white border */
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Typography Utility */
+h2 {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+p {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+}
+
+/* Buttons */
+.btn-primary {
+    padding: 14px 40px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: white;
+    background: transparent;
+    border: 1px solid white;
+    position: relative;
+    transition: all 0.4s ease;
+    z-index: 1;
+    border-radius: 30px;
+}
+
+.btn-primary:hover {
+    background: white;
+    color: black;
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.4);
+    border-color: white;
+}
+
+.btn-glass {
+    padding: 14px 40px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+    transition: all 0.4s ease;
+    border-radius: 30px;
+}
+
+.btn-glass:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+}
