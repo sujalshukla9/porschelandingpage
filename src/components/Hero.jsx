@@ -15,7 +15,7 @@ const Hero = () => {
                     </p>
                     <div className="hero-buttons">
                         <button className="btn-primary" onClick={() => document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' })}>Explore Model</button>
-                        <button className="btn-glass" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>Get int Touch</button>
+                        <button className="btn-glass" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>Get in Touch</button>
                     </div>
                 </div>
             </div>
