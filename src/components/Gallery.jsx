@@ -3,7 +3,7 @@ import { ThreeDPhotoCarousel } from './ui/3d-carousel';
 
 const Gallery = () => {
     return (
-        <div id="gallery" className="py-20 min-h-screen">
+        <div id="gallery" className="pt-20 pb-10">
             <div className="mb-12 text-center">
                 <h2 className="text-4xl font-bold tracking-tight sm:text-6xl text-white" style={{ fontFamily: 'var(--font-display)' }}>
                     Visual Journey

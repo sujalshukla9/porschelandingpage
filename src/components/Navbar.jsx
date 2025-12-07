@@ -16,26 +16,46 @@ const Navbar = () => {
         const playAudio = () => {
             if (audioRef.current) {
                 audioRef.current.volume = 0.4;
-                // Try playing. If it fails, we just catch it.
-                // We do NOT set isMuted(true) because the user wants it to act unmuted.
-                audioRef.current.play().catch(error => {
+                return audioRef.current.play().catch(error => {
                     console.log("Autoplay prevented:", error);
+                    // Autoplay likely failed because of unmuted.
+                    // Fallback: Mute and play, and update state to match.
+                    setIsMuted(true);
+                    if (audioRef.current) {
+                        audioRef.current.muted = true;
+                        return audioRef.current.play().catch(e => console.error("Muted play failed", e));
+                    }
+                    return Promise.reject(error);
                 });
             }
+            return Promise.resolve();
         };
 
         // Attempt immediate play on mount
         playAudio();
 
-        // Also add a one-time global click listener to force play on first interaction
-        // This handles cases where browser strictly blocks 'unsolicited' audio
+        // Also add a global listener to force play on ANY interaction
         const handleOneTimeInteraction = () => {
-            playAudio();
-            document.removeEventListener('click', handleOneTimeInteraction);
+            playAudio().then(() => {
+                // Only remove listeners if playback actually succeeded
+                ['click', 'keydown', 'touchstart', 'mousemove', 'wheel', 'scroll', 'mousedown', 'pointerdown', 'focus', 'resize'].forEach(event =>
+                    document.removeEventListener(event, handleOneTimeInteraction)
+                );
+            }).catch(() => {
+                // If playback failed (e.g. browser blocked it bc event wasn't trusted),
+                // we keep the listeners attached so the next interaction (likely a click) can try again.
+            });
         };
 
-        document.addEventListener('click', handleOneTimeInteraction);
-        return () => document.removeEventListener('click', handleOneTimeInteraction);
+        ['click', 'keydown', 'touchstart', 'mousemove', 'wheel', 'scroll', 'mousedown', 'pointerdown', 'focus', 'resize'].forEach(event =>
+            document.addEventListener(event, handleOneTimeInteraction)
+        );
+
+        return () => {
+            ['click', 'keydown', 'touchstart', 'mousemove', 'wheel', 'scroll', 'mousedown', 'pointerdown', 'focus', 'resize'].forEach(event =>
+                document.removeEventListener(event, handleOneTimeInteraction)
+            );
+        };
     }, []);
 
     const toggleMute = () => {
@@ -87,7 +107,7 @@ const Navbar = () => {
                     <button onClick={toggleMute} className="mute-btn" data-hover="Sound">
                         {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
                     </button>
-                    <audio ref={audioRef} src={bgMusic} loop muted={isMuted} />
+                    <audio ref={audioRef} src={bgMusic} loop autoPlay muted={isMuted} />
                 </li>
             </ul>
 

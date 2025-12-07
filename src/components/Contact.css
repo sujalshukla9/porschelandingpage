@@ -1,5 +1,7 @@
 .contact {
-    min-height: 90vh;
+    min-height: auto;
+    padding-top: 20px;
+    padding-bottom: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
